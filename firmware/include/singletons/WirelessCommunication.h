@@ -2,7 +2,7 @@
 
 // ------------------------------------ Macros ------------------------------------
 
-#define JOYSTICK_DEADBAND 0.1f // in percent, applied to both top and bottom
+#define JOYSTICK_CENTER_DEADBAND 0.1f // in percent, applied to both top and bottom
 
 // --------------------------------------------------------------------------------
 

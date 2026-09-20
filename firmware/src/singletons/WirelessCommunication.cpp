@@ -25,13 +25,11 @@ void WirelessCommunication::update() {
     Dabble.processInput();
 
     float joystickInputX = GamePad.getXaxisData() / 7;
-    if (joystickInputX < JOYSTICK_DEADBAND) joystickInputX = 0.0;
-    if (joystickInputX > 1.0 - JOYSTICK_DEADBAND) joystickInputX = 1.0;
+    if (abs(joystickInputX) < JOYSTICK_CENTER_DEADBAND) joystickInputX = 0.0;
     if (joystickBindingX != nullptr) joystickBindingX(joystickInputX);
 
     float joystickInputY = GamePad.getYaxisData() / 7;
-    if (joystickInputY < JOYSTICK_DEADBAND) joystickInputY = 0.0;
-    if (joystickInputY > 1.0 - JOYSTICK_DEADBAND) joystickInputY = 1.0;
+    if (abs(joystickInputY) < JOYSTICK_CENTER_DEADBAND) joystickInputY = 0.0;
     if (joystickBindingY != nullptr) joystickBindingY(joystickInputY);
     
 }
