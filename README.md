@@ -6,6 +6,6 @@
 
 ## Schematic
 
-<div>
+<div align="center">
     <img src="/images/schematic iteration 2.png" width="800" />
 </div>
