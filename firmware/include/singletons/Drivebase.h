@@ -1,18 +1,18 @@
 #pragma once
 
 #include <Arduino.h>
-#include <ESP32Servo.h>
 
 // ------------------------------------ Macros ------------------------------------
 
-#define IN1_PIN 0 // 0 placeholders
-#define IN2_PIN 0
-#define IN3_PIN 0 
-#define IN4_PIN 0
-#define ENA_PIN 0
-#define ENB_PIN 0 
+#define EN1_PIN 26 
+#define EN2_PIN 25 
+#define EN3_PIN 3
+#define EN4_PIN 1
 
-#define SERVO_PIN 0
+#define LPWM1_PIN 33
+#define RPWM1_PIN 32 
+#define LPWM2_PIN 22
+#define RPWM2_PIN 23
 
 // --------------------------------------------------------------------------------
 
@@ -33,7 +33,5 @@ class Drivebase {
     private:
         Drivebase() = default;
         ~Drivebase() = default;
-
-        Servo MG995;
 
 };

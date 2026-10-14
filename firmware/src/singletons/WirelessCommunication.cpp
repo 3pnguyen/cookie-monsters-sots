@@ -26,10 +26,13 @@ void WirelessCommunication::update() {
 
     float joystickInputX = GamePad.getXaxisData() / 7;
     if (abs(joystickInputX) < JOYSTICK_CENTER_DEADBAND) joystickInputX = 0.0;
-    if (joystickBindingX != nullptr) joystickBindingX(joystickInputX);
 
     float joystickInputY = GamePad.getYaxisData() / 7;
     if (abs(joystickInputY) < JOYSTICK_CENTER_DEADBAND) joystickInputY = 0.0;
-    if (joystickBindingY != nullptr) joystickBindingY(joystickInputY);
+
+    if (joystickBindingX != nullptr && joystickBindingY != nullptr) {
+        if (abs(joystickInputY) > abs(joystickInputX)) joystickBindingY(joystickInputY);
+        else joystickBindingX(joystickInputX);
+    }
     
 }

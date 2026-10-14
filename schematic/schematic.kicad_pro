@@ -30,6 +30,10 @@
   "erc": {
     "erc_exclusions": [
       [
+        "pin_to_pin|3022600|838200|40072440-f842-4295-a3f6-c762426bd678|356a2d10-3196-4d1b-95b4-172509fff78c|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f",
+        ""
+      ],
+      [
         "pin_to_pin|3060700|1193800|40072440-f842-4295-a3f6-c762426bd678|356a2d10-3196-4d1b-95b4-172509fff78c|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f",
         ""
       ],
