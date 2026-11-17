@@ -6,6 +6,8 @@
 
 // --------------------------------------------------------------------------------
 
+using Function = void(*)(); 
+
 class WirelessCommunication {
     public:
         WirelessCommunication(const WirelessCommunication&) = delete;
@@ -17,15 +19,31 @@ class WirelessCommunication {
 
         void begin();
 
-        void bindJoystickX(void (*callable)(float));
-        void bindJoystickY(void (*callable)(float));
+        float getJoystickX();
+        float getJoystickY();
+
+        void bindUpButton(Function callable);
+        void bindRightButton(Function callable);
+        void bindDownButton(Function callable);
+        void bindLeftButton(Function callable);
+        void bindTriangleButton(Function callable); 
+        void bindCircleButton(Function callable);
+        void bindXButton(Function callable);
+        void bindSquareButton(Function callable); 
+
         void update();
 
     private:
         WirelessCommunication() = default;
         ~WirelessCommunication() = default;
 
-        void (*joystickBindingX)(float);
-        void (*joystickBindingY)(float);
+        Function buttonBindingUp = nullptr;
+        Function buttonBindingRight = nullptr;
+        Function buttonBindingDown = nullptr;
+        Function buttonBindingLeft = nullptr;
+        Function buttonBindingTriangle = nullptr;
+        Function buttonBindingCircle = nullptr;
+        Function buttonBindingX = nullptr;
+        Function buttonBindingSquare = nullptr;
     
 };

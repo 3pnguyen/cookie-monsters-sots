@@ -10,29 +10,80 @@ WirelessCommunication& WirelessCommunication::getInstance() {
 }
 
 void WirelessCommunication::begin() {
-    Dabble.begin("ESP32 Car");
+    Dabble.begin("Cookie Monsters Car");
 }
 
-void WirelessCommunication::bindJoystickX(void (*callable)(float)) {
-    joystickBindingX = callable;
+float WirelessCommunication::getJoystickX() {
+    // normalize to one because readings go up to 7 for some reason
+    float input = GamePad.getXaxisData() / 7;
+    if (abs(input) < JOYSTICK_CENTER_DEADBAND) input = 0.0;
+    return input;
 }
 
-void WirelessCommunication::bindJoystickY(void (*callable)(float)) {
-    joystickBindingY = callable;
+float WirelessCommunication::getJoystickY() {
+    // normalize to one because readings go up to 7 for some reason
+    float input = GamePad.getYaxisData() / 7;
+    if (abs(input) < JOYSTICK_CENTER_DEADBAND) input = 0.0;
+    return input;
 }
+
+void WirelessCommunication::bindUpButton(Function callable) {
+    buttonBindingUp = callable;
+}
+
+void WirelessCommunication::bindRightButton(Function callable) {
+    buttonBindingRight = callable;
+}
+
+void WirelessCommunication::bindDownButton(Function callable) {
+    buttonBindingDown = callable;
+}
+
+void WirelessCommunication::bindLeftButton(Function callable) {
+    buttonBindingLeft = callable;
+}
+
+void WirelessCommunication::bindTriangleButton(Function callable) {
+    buttonBindingTriangle = callable;
+} 
+
+void WirelessCommunication::bindCircleButton(Function callable) {
+    buttonBindingCircle = callable;
+}
+
+void WirelessCommunication::bindXButton(Function callable) {
+    buttonBindingX = callable;
+}
+
+void WirelessCommunication::bindSquareButton(Function callable) {
+    buttonBindingSquare = callable;
+} 
 
 void WirelessCommunication::update() {
     Dabble.processInput();
 
-    float joystickInputX = GamePad.getXaxisData() / 7;
-    if (abs(joystickInputX) < JOYSTICK_CENTER_DEADBAND) joystickInputX = 0.0;
+    if (buttonBindingUp != nullptr && GamePad.isUpPressed())
+        buttonBindingUp();
 
-    float joystickInputY = GamePad.getYaxisData() / 7;
-    if (abs(joystickInputY) < JOYSTICK_CENTER_DEADBAND) joystickInputY = 0.0;
+    if (buttonBindingRight != nullptr && GamePad.isRightPressed())
+        buttonBindingRight();
 
-    if (joystickBindingX != nullptr && joystickBindingY != nullptr) {
-        if (abs(joystickInputY) > abs(joystickInputX)) joystickBindingY(joystickInputY);
-        else joystickBindingX(joystickInputX);
-    }
-    
+    if (buttonBindingDown != nullptr && GamePad.isDownPressed())
+        buttonBindingDown();
+
+    if (buttonBindingLeft != nullptr && GamePad.isLeftPressed())
+        buttonBindingLeft();
+
+    if (buttonBindingTriangle != nullptr && GamePad.isTrianglePressed()) 
+        buttonBindingTriangle();
+
+    if (buttonBindingCircle != nullptr && GamePad.isCirclePressed()) 
+        buttonBindingCircle();
+
+    if (buttonBindingX != nullptr && GamePad.isCrossPressed()) 
+        buttonBindingX();
+
+    if (buttonBindingSquare != nullptr && GamePad.isSquarePressed()) 
+        buttonBindingSquare();
+
 }

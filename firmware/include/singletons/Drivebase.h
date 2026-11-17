@@ -1,18 +1,22 @@
 #pragma once
 
 #include <Arduino.h>
+#include <Wire.h>
+#include <SparkFun_BNO08x_Arduino_Library.h>
 
 // ------------------------------------ Macros ------------------------------------
 
-#define EN1_PIN 26 
-#define EN2_PIN 25 
-#define EN3_PIN 3
-#define EN4_PIN 1
+#define IN1_PIN 16 //placeholders
+#define IN2_PIN 4 
+#define IN3_PIN 27
+#define IN4_PIN 14
+#define ENA_PIN 2
+#define ENB_PIN 12
 
-#define LPWM1_PIN 33
-#define RPWM1_PIN 32 
-#define LPWM2_PIN 22
-#define RPWM2_PIN 23
+#define TURN_P_GAIN 1.2
+
+#define SDA_PIN 21  
+#define SCL_PIN 22
 
 // --------------------------------------------------------------------------------
 
@@ -28,10 +32,20 @@ class Drivebase {
         void begin();
         
         void drive(float speed_percent);
+        void tankDrive(float left_speed_percent, float right_speed_percent);
         void steer(float steer_percent);
+
+        void resetHeading();
+        void updateIMU();
+        float getHeading();
+        void turnToHeading(float targetHeading);
 
     private:
         Drivebase() = default;
         ~Drivebase() = default;
+
+        BNO08x imu;
+        float yaw = 0.0;
+        bool yawAvaliable = false;
 
 };

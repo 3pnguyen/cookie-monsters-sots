@@ -28,20 +28,7 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [
-      [
-        "pin_to_pin|3022600|838200|40072440-f842-4295-a3f6-c762426bd678|356a2d10-3196-4d1b-95b4-172509fff78c|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f",
-        ""
-      ],
-      [
-        "pin_to_pin|3060700|1193800|40072440-f842-4295-a3f6-c762426bd678|356a2d10-3196-4d1b-95b4-172509fff78c|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f",
-        ""
-      ],
-      [
-        "pin_to_pin|787400|914400|40072440-f842-4295-a3f6-c762426bd678|356a2d10-3196-4d1b-95b4-172509fff78c|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f|/09e95ddd-9912-4ec6-a4b0-53eedbc89c6f",
-        ""
-      ]
-    ],
+    "erc_exclusions": [],
     "meta": {
       "version": 0
     },
@@ -409,7 +396,7 @@
       "default_line_thickness": 6.0,
       "default_text_size": 50.0,
       "field_names": [],
-      "hop_over_size_choice": 0,
+      "hop_over_size_choice": 3,
       "intersheets_ref_own_page": false,
       "intersheets_ref_prefix": "",
       "intersheets_ref_short": false,
@@ -450,7 +437,7 @@
         "uuid": "09e95ddd-9912-4ec6-a4b0-53eedbc89c6f"
       }
     ],
-    "used_designators": "M1-5,U1-4,BT1,#PWR1-29,D1-2,C1-22,#FLG1-3",
+    "used_designators": "U1-8,M1-10,D1-2,#PWR1-42,BT1,C1-29,R1-2,#FLG1-5",
     "variants": []
   },
   "sheets": [

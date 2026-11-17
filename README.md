@@ -7,5 +7,5 @@
 ## Schematic
 
 <div align="center">
-    <img src="/images/schematic iteration 2.png" width="800" />
+    <img src="/images/schematic iteration 3.png" width="800" />
 </div>
