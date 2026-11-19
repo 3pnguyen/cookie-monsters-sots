@@ -23,9 +23,12 @@ void Drivebase::begin() {
     // imu setup
     Wire.begin(SDA_PIN, SCL_PIN);
 
-    // if (!imu.begin()) { 
-    // while (true) {delay(10);} // freezes the code if not wired correctly
-    // }
+    if (imu.begin(ADDRESS, Wire, INT_PIN, RST_PIN) == false) 
+        while (1); // freezes the code if not wired correctly
+    
+    Wire.setClock(400000);
+
+    imu.enableRotationVector(50);
 
 }
 
@@ -52,11 +55,11 @@ void Drivebase::tankDrive(float left_speed_percent, float right_speed_percent) {
     if (abs(left_speed_percent) > 1.0) return;
     if (abs(right_speed_percent) > 1.0) return;
 
-    digitalWrite(IN1_PIN, (left_speed_percent == abs(left_speed_percent)) ? HIGH : LOW);
-    digitalWrite(IN2_PIN, (left_speed_percent == abs(left_speed_percent)) ? LOW : HIGH);
+    digitalWrite(IN1_PIN, left_speed_percent > 0.0f ? HIGH : LOW);
+    digitalWrite(IN2_PIN, left_speed_percent < 0.0f ? HIGH : LOW);
 
-    digitalWrite(IN3_PIN, (right_speed_percent == abs(right_speed_percent)) ? HIGH : LOW);
-    digitalWrite(IN4_PIN, (right_speed_percent == abs(right_speed_percent)) ? LOW : HIGH);
+    digitalWrite(IN3_PIN, right_speed_percent > 0.0f ? HIGH : LOW);
+    digitalWrite(IN4_PIN, right_speed_percent < 0.0f ? HIGH : LOW);
 
     // analogWrite(ENA_PIN, (int)(abs(left_speed_percent) * 255));
     // analogWrite(ENB_PIN, (int)(abs(right_speed_percent) * 255));
@@ -82,16 +85,29 @@ void Drivebase::steer(float steer_percent) {
     // analogWrite(ENB_PIN, (int)(abs(steer_percent) * 255));
 }
 
+void Drivebase::stop() {
+    digitalWrite(IN1_PIN, LOW);
+    digitalWrite(IN2_PIN, LOW);
+    digitalWrite(IN3_PIN, LOW);
+    digitalWrite(IN4_PIN, LOW);
+}
+
 void Drivebase::resetHeading() {
     imu.tareNow(true);
 }
 
 void Drivebase::updateIMU() {
-    if (imu.getSensorEvent()) {
-        if (imu.getSensorEventID() == SENSOR_REPORTID_GYROSCOPE_CALIBRATED) {
-            yaw = imu.getYaw() * 180.0 / PI;
-            yawAvaliable = true;
-        }
+    if (imu.wasReset())
+        imu.enableRotationVector(50);
+
+    // Active-low interrupt: return while no data is ready.
+    if (digitalRead(INT_PIN) == HIGH)
+        return;
+
+    if (imu.getSensorEvent() &&
+        imu.getSensorEventID() == SENSOR_REPORTID_ROTATION_VECTOR) {
+        yaw = imu.getYaw() * 180.0 / PI;
+        yawAvaliable = true;
     }
 }
 
@@ -106,8 +122,38 @@ void Drivebase::turnToHeading(float targetHeading) {
 
         steer(output);
 
-        if (abs(error) < 0.1)
+        if (abs(error) < TOLERANCE)
             break;
     }
     
+}
+
+void Drivebase::gyroStraight(float speed_percent) {
+    if (!drivingStraight) {
+        resetHeading();
+        drivingStraight = true;
+    }
+
+    if (abs(speed_percent) > 1.0f) return;
+    if (speed_percent == 0.0f) {
+        stop();
+        return;
+    }
+
+    if (speed_percent >= 0.0) {
+        if (yaw < -TOLERANCE)
+            tankDrive(0.0, STRAIGHT_ADJUSTMENT_SPEED);
+        else if (yaw > TOLERANCE)
+            tankDrive(STRAIGHT_ADJUSTMENT_SPEED, 0.0);
+        else
+            drive(speed_percent);
+            
+    } else {
+        if (yaw < -TOLERANCE)
+            tankDrive(-STRAIGHT_ADJUSTMENT_SPEED, 0.0);
+        else if (yaw > TOLERANCE)
+            tankDrive(0.0, -STRAIGHT_ADJUSTMENT_SPEED);
+        else
+            drive(speed_percent);
+    }
 }

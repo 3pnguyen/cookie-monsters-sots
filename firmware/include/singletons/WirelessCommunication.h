@@ -26,10 +26,16 @@ class WirelessCommunication {
         void bindRightButton(Function callable);
         void bindDownButton(Function callable);
         void bindLeftButton(Function callable);
+        void bindDefaultDrivebaseBinding(Function callable);
+
         void bindTriangleButton(Function callable); 
+        void bindDefaultTriangleBinding(Function callable);
         void bindCircleButton(Function callable);
+        void bindDefaultCircleBinding(Function callable);
         void bindXButton(Function callable);
+        void bindDefaultXBinding(Function callable);
         void bindSquareButton(Function callable); 
+        void bindDefaultSquareBinding(Function callable);
 
         void update();
 
@@ -41,9 +47,15 @@ class WirelessCommunication {
         Function buttonBindingRight = nullptr;
         Function buttonBindingDown = nullptr;
         Function buttonBindingLeft = nullptr;
+        Function defaultDrivebaseBinding = nullptr;
+
         Function buttonBindingTriangle = nullptr;
+        Function defaultBindingTriangle = nullptr;
         Function buttonBindingCircle = nullptr;
+        Function defaultBindingCircle = nullptr;
         Function buttonBindingX = nullptr;
+        Function defaultBindingX = nullptr;
         Function buttonBindingSquare = nullptr;
+        Function defaultBindingSquare = nullptr;
     
 };

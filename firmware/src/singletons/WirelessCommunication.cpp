@@ -43,21 +43,41 @@ void WirelessCommunication::bindLeftButton(Function callable) {
     buttonBindingLeft = callable;
 }
 
+void WirelessCommunication::bindDefaultDrivebaseBinding(Function callable) {
+    defaultDrivebaseBinding = callable;
+}
+
 void WirelessCommunication::bindTriangleButton(Function callable) {
     buttonBindingTriangle = callable;
 } 
 
+void WirelessCommunication::bindDefaultTriangleBinding(Function callable) {
+    defaultBindingTriangle = callable;
+}
+
 void WirelessCommunication::bindCircleButton(Function callable) {
     buttonBindingCircle = callable;
+}
+
+void WirelessCommunication::bindDefaultCircleBinding(Function callable) {
+    defaultBindingCircle = callable;
 }
 
 void WirelessCommunication::bindXButton(Function callable) {
     buttonBindingX = callable;
 }
 
+void WirelessCommunication::bindDefaultXBinding(Function callable) {
+    defaultBindingX = callable;
+}
+
 void WirelessCommunication::bindSquareButton(Function callable) {
     buttonBindingSquare = callable;
 } 
+
+void WirelessCommunication::bindDefaultSquareBinding(Function callable) {
+    defaultBindingSquare = callable;
+}
 
 void WirelessCommunication::update() {
     Dabble.processInput();
@@ -74,16 +94,33 @@ void WirelessCommunication::update() {
     if (buttonBindingLeft != nullptr && GamePad.isLeftPressed())
         buttonBindingLeft();
 
+    if (
+        !GamePad.isUpPressed() && 
+        !GamePad.isRightPressed() &&
+        !GamePad.isDownPressed() &&
+        !GamePad.isLeftPressed() &&
+        defaultDrivebaseBinding != nullptr
+    )
+        defaultDrivebaseBinding();
+
     if (buttonBindingTriangle != nullptr && GamePad.isTrianglePressed()) 
         buttonBindingTriangle();
+    else if (defaultBindingTriangle != nullptr)
+        defaultBindingTriangle();
 
     if (buttonBindingCircle != nullptr && GamePad.isCirclePressed()) 
         buttonBindingCircle();
+    else if (defaultBindingCircle != nullptr)
+        defaultBindingCircle();
 
     if (buttonBindingX != nullptr && GamePad.isCrossPressed()) 
         buttonBindingX();
+    else if (defaultBindingX != nullptr)
+        defaultBindingX();
 
     if (buttonBindingSquare != nullptr && GamePad.isSquarePressed()) 
         buttonBindingSquare();
+    else if (defaultBindingSquare != nullptr)
+        defaultBindingSquare();
 
 }

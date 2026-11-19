@@ -51,14 +51,12 @@ void Shooter::begin() {
     // motor controller configurations
     pinMode(L_EN_PIN, OUTPUT);
     pinMode(R_EN_PIN, OUTPUT);
-    pinMode(LPWM_PIN, OUTPUT);
-    pinMode(RPWM_PIN, OUTPUT);
 
     digitalWrite(L_EN_PIN, LOW);
     digitalWrite(R_EN_PIN, LOW);
 
     analogWrite(LPWM_PIN, 0);
-    analogWrite(RPWM_PIN, 0);
+    analogWrite(RPWM_PIN, 0); 
 
 }
 
