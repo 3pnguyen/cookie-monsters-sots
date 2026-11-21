@@ -10,6 +10,7 @@ WirelessCommunication& WirelessCommunication::getInstance() {
 }
 
 void WirelessCommunication::begin() {
+    pinMode(LED_BUILTIN, OUTPUT);
     Dabble.begin("Cookie Monsters Car");
 }
 
@@ -122,5 +123,21 @@ void WirelessCommunication::update() {
         buttonBindingSquare();
     else if (defaultBindingSquare != nullptr)
         defaultBindingSquare();
+
+    // built-in LED
+
+    if (
+        GamePad.isUpPressed() ||
+        GamePad.isRightPressed() ||
+        GamePad.isDownPressed() ||
+        GamePad.isLeftPressed() ||
+        GamePad.isTrianglePressed() ||
+        GamePad.isCirclePressed() ||
+        GamePad.isCrossPressed() ||
+        GamePad.isSquarePressed()
+    )
+        digitalWrite(LED_BUILTIN, HIGH);
+    else
+        digitalWrite(LED_BUILTIN, LOW);
 
 }

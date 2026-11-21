@@ -14,15 +14,15 @@ int percentToPwm(float percent) {
 void setMotor(
     int leftEnablePin, 
     int rightEnablePin, 
-    int leftPwmPin, 
-    int rightPwmPin, 
+    int leftPwmChannel, 
+    int rightPwmChannel, 
     float percent
 ) {
-    const int pwm = percentToPwm(percent);
+    int pwm = percentToPwm(percent);
 
     if (pwm == 0) {
-        analogWrite(leftPwmPin, 0);
-        analogWrite(rightPwmPin, 0);
+        ledcWrite(leftPwmChannel, 0);
+        ledcWrite(rightPwmChannel, 0);
         digitalWrite(leftEnablePin, LOW);
         digitalWrite(rightEnablePin, LOW);
         return;
@@ -32,11 +32,11 @@ void setMotor(
     digitalWrite(rightEnablePin, HIGH);
 
     if (percent > 0.0F) {
-        analogWrite(leftPwmPin, 0);
-        analogWrite(rightPwmPin, pwm);
+        ledcWrite(leftPwmChannel, 0);
+        ledcWrite(rightPwmChannel, pwm);
     } else {
-        analogWrite(leftPwmPin, pwm);
-        analogWrite(rightPwmPin, 0);
+        ledcWrite(leftPwmChannel, pwm);
+        ledcWrite(rightPwmChannel, 0);
     }
 }
 
@@ -55,14 +55,20 @@ void Shooter::begin() {
     digitalWrite(L_EN_PIN, LOW);
     digitalWrite(R_EN_PIN, LOW);
 
-    analogWrite(LPWM_PIN, 0);
-    analogWrite(RPWM_PIN, 0); 
+    ledcSetup(LED_CHANNEL_LPWM, 5000, 8);
+    ledcAttachPin(LPWM_PIN, LED_CHANNEL_LPWM);
+    ledcWrite(LED_CHANNEL_LPWM, 0);
+
+    ledcSetup(LED_CHANNEL_RPWM, 5000, 8);
+    ledcAttachPin(RPWM_PIN, LED_CHANNEL_RPWM);
+    ledcWrite(LED_CHANNEL_RPWM, 0);
+
 
 }
 
 void Shooter::shoot(float speed_percent) {
     if (abs(speed_percent) > 1.0) return;
 
-    setMotor(L_EN_PIN, R_EN_PIN, LPWM_PIN, RPWM_PIN, speed_percent);
+    setMotor(L_EN_PIN, R_EN_PIN, LED_CHANNEL_LPWM, LED_CHANNEL_RPWM, speed_percent);
 
 }

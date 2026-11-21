@@ -6,8 +6,8 @@
 
 // ------------------------------------ Macros ------------------------------------
 
-#define IN1_PIN 16 //placeholders
-#define IN2_PIN 4 
+#define IN1_PIN 26 //placeholders
+#define IN2_PIN 12 
 #define IN3_PIN 27
 #define IN4_PIN 14
 // #define ENA_PIN 2
@@ -15,7 +15,7 @@
 
 #define TURN_P_GAIN 1.5
 #define STRAIGHT_ADJUSTMENT_SPEED 1
-#define TOLERANCE 2.0
+#define TOLERANCE 2.5
 
 #define SDA_PIN 21  
 #define SCL_PIN 22
