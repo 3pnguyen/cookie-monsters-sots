@@ -5,7 +5,7 @@
 #define shooter Shooter::getInstance()
 
 const int yardTimeMs = 1150; // time it takes for the car to drive a yard
-const float shooterSpeedForAccuracy = 0.0; // speed of the shooter for the distance challange
+const float shooterSpeedForAccuracy = 0.3; // speed of the shooter for the distance challange
 
 void driveForTime(int timeMs, float speed) {
     unsigned long startTime = millis();

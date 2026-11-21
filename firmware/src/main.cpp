@@ -39,7 +39,11 @@ void setup() {
   // manual arm bindings 
   wirelessCommunication.bindSquareButton([]() -> void { arm.closeClaw(); });
   wirelessCommunication.bindDefaultSquareBinding([]() -> void { arm.openClaw(); });
-  wirelessCommunication.bindCircleButton([]() -> void { arm.pushOut(); });
+
+  // autos
+
+  wirelessCommunication.bindCircleButton([]() -> void { distanceAutonomous(); });
+  wirelessCommunication.bindXButton( []() -> void { accuracyAutonomous(); });
 
   // initialization
 

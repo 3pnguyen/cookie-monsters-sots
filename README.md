@@ -9,3 +9,11 @@
 <div align="center">
     <img src="/images/schematic iteration 4.png" width="800" />
 </div>
+
+## Controls
+
+* Arrow buttons: drive controls
+* Triangle button: manual shoot
+* Square button: manual grab w/ claw
+* Circle button: distance autonomuous
+* X/Cross button: accuracy autonomuous
