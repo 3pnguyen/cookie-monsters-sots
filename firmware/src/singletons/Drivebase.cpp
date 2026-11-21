@@ -117,6 +117,8 @@ float Drivebase::getHeading() {
 
 void Drivebase::turnToHeading(float targetHeading) {
     while (true) {
+        updateIMU();
+
         float error = fmodf((yaw - targetHeading) + 180.0f, 360.0f) - 180.0f;
         float output = constrain((error / 180) * TURN_P_GAIN, -1.0, 1.0);
 

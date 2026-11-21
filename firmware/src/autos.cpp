@@ -24,12 +24,14 @@ void driveForTime(int timeMs, float speed) {
 
 void distanceAutonomous(float shooterSpeed) {
     drivebase.drivingStraight = false;
-    driveForTime(yardTimeMs - 100, true);
+    driveForTime(yardTimeMs - 250, true);
     delay(1000);
     arm.pivotToGrab();
+    delay(1000);
     arm.closeClaw();
+    delay(1000);
     arm.pivotToLoad();
-    driveForTime(yardTimeMs + 300, -true);
+    driveForTime(yardTimeMs + 500, -true);
     drivebase.turnToHeading(180);
     shooter.shoot(shooterSpeed);
     delay(2000); // charge up shooter

@@ -13,7 +13,8 @@
 #define CLAW_OPEN_POSITION 35
 
 #define PUSH_TIME_MS 700
-#define PIVOT_MOVING_TIME 2000
+#define PIVOT_UP_TIME 4500
+#define PIVOT_DOWN_TIME 3500
 
 // --------------------------------------------------------------------------------
 
