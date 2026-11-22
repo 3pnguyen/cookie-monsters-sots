@@ -9,12 +9,12 @@
 #define CLAW_SERVO_PIN 15
 #define RACK_PINION_SERVO_PIN 4
 
-#define CLAW_CLOSED_POSITION 15
-#define CLAW_OPEN_POSITION 35
+#define CLAW_CLOSED_POSITION 25
+#define CLAW_OPEN_POSITION 50
 
 #define PUSH_TIME_MS 700
-#define PIVOT_UP_TIME 4500
-#define PIVOT_DOWN_TIME 3500
+#define PIVOT_UP_TIME 2900
+#define PIVOT_DOWN_TIME 1800
 
 // --------------------------------------------------------------------------------
 

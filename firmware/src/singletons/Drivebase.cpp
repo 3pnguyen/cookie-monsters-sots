@@ -17,8 +17,13 @@ void Drivebase::begin() {
     digitalWrite(IN3_PIN, LOW);
     digitalWrite(IN4_PIN, LOW);
 
-    // analogWrite(ENA_PIN, 0);
-    // analogWrite(ENB_PIN, 0);
+    ledcSetup(LED_CHANNEL_ENA, 5000, 8);
+    ledcAttachPin(ENA_PIN, LED_CHANNEL_ENA);
+    ledcWrite(LED_CHANNEL_ENA, 0);
+
+    ledcSetup(LED_CHANNEL_ENB, 5000, 8);
+    ledcAttachPin(ENB_PIN, LED_CHANNEL_ENB);
+    ledcWrite(LED_CHANNEL_ENB, 0);
 
     // imu setup
     Wire.begin(SDA_PIN, SCL_PIN);
@@ -47,8 +52,8 @@ void Drivebase::drive(float speed_percent) {
         digitalWrite(IN4_PIN, HIGH);
     }
 
-    // analogWrite(ENA_PIN, (int)(abs(speed_percent) * 255));
-    // analogWrite(ENB_PIN, (int)(abs(speed_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENA, (int)(abs(speed_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENB, (int)(abs(speed_percent) * 255));
 }
 
 void Drivebase::tankDrive(float left_speed_percent, float right_speed_percent) {
@@ -61,8 +66,8 @@ void Drivebase::tankDrive(float left_speed_percent, float right_speed_percent) {
     digitalWrite(IN3_PIN, right_speed_percent > 0.0f ? HIGH : LOW);
     digitalWrite(IN4_PIN, right_speed_percent < 0.0f ? HIGH : LOW);
 
-    // analogWrite(ENA_PIN, (int)(abs(left_speed_percent) * 255));
-    // analogWrite(ENB_PIN, (int)(abs(right_speed_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENA, (int)(abs(left_speed_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENB, (int)(abs(right_speed_percent) * 255));
 
 }
 
@@ -81,8 +86,27 @@ void Drivebase::steer(float steer_percent) {
         digitalWrite(IN4_PIN, LOW);
     }
 
-    // analogWrite(ENA_PIN, (int)(abs(steer_percent) * 255));
-    // analogWrite(ENB_PIN, (int)(abs(steer_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENA, (int)(abs(steer_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENB, (int)(abs(steer_percent) * 255));
+}
+
+void Drivebase::pivotSteer(float steer_percent) {
+    if (abs(steer_percent) > 1.0) return;
+
+    if (steer_percent == abs(steer_percent)) { // assumes inputs 1 & 2 are left side and vice versa
+        digitalWrite(IN1_PIN, HIGH); 
+        digitalWrite(IN2_PIN, LOW);
+        digitalWrite(IN3_PIN, LOW);
+        digitalWrite(IN4_PIN, LOW);
+    } else {
+        digitalWrite(IN1_PIN, LOW);
+        digitalWrite(IN2_PIN, LOW);
+        digitalWrite(IN3_PIN, HIGH);
+        digitalWrite(IN4_PIN, LOW);
+    }
+
+    ledcWrite(LED_CHANNEL_ENA, (int)(abs(steer_percent) * 255));
+    ledcWrite(LED_CHANNEL_ENB, (int)(abs(steer_percent) * 255));
 }
 
 void Drivebase::stop() {
@@ -115,17 +139,22 @@ float Drivebase::getHeading() {
     return yaw;
 }
 
-void Drivebase::turnToHeading(float targetHeading) {
+void Drivebase::turnToHeading(float targetHeading, bool usePivotSteer) {
     while (true) {
         updateIMU();
 
         float error = fmodf((yaw - targetHeading) + 180.0f, 360.0f) - 180.0f;
         float output = constrain((error / 180) * TURN_P_GAIN, -1.0, 1.0);
 
-        steer(output);
+        if (usePivotSteer)
+            pivotSteer(output);
+        else
+            steer(output);
 
-        if (abs(error) < TOLERANCE)
+        if (abs(error) < TOLERANCE) {
+            stop();
             break;
+        }
     }
     
 }

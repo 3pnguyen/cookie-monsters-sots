@@ -4,13 +4,14 @@
 #define drivebase Drivebase::getInstance() // do not put in header file or else duplicate macros will conflict
 #define shooter Shooter::getInstance()
 
-const int yardTimeMs = 1150; // time it takes for the car to drive a yard
 const float shooterSpeedForAccuracy = 0.3; // speed of the shooter for the distance challange
 
 void driveForTime(int timeMs, float speed) {
     unsigned long startTime = millis();
 
     while (true) {
+        drivebase.updateIMU();
+
         unsigned long elapsedTime = millis() - startTime;
         drivebase.gyroStraight(speed);
 
@@ -24,19 +25,19 @@ void driveForTime(int timeMs, float speed) {
 
 void distanceAutonomous(float shooterSpeed) {
     drivebase.drivingStraight = false;
-    driveForTime(yardTimeMs - 250, true);
+    driveForTime(3200, 0.7);
     delay(1000);
     arm.pivotToGrab();
     delay(1000);
     arm.closeClaw();
     delay(1000);
     arm.pivotToLoad();
-    driveForTime(yardTimeMs + 500, -true);
-    drivebase.turnToHeading(180);
+    driveForTime(2000, -0.7);
+    drivebase.turnToHeading(180, false);
     shooter.shoot(shooterSpeed);
     delay(2000); // charge up shooter
     arm.pushOut();
-    delay(2000);
+    delay(4000);
     shooter.shoot(0.0);
 
 }

@@ -42,7 +42,7 @@ void Arm::pivotToLoad() {
         pivotServo.attach(PIVOT_SERVO_PIN);
     }
 
-    pivotServo.write(135); // servo counterclockwise goes up
+    pivotServo.write(180); // servo counterclockwise goes up
     delay(PIVOT_UP_TIME);
 
     pivotServo.write(90);

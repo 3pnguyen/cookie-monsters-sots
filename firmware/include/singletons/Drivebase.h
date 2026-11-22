@@ -10,11 +10,14 @@
 #define IN2_PIN 12 
 #define IN3_PIN 27
 #define IN4_PIN 14
-// #define ENA_PIN 2
-// #define ENB_PIN 12
+#define ENA_PIN 25
+#define ENB_PIN 33
 
-#define TURN_P_GAIN 1.5
-#define STRAIGHT_ADJUSTMENT_SPEED 1
+#define LED_CHANNEL_ENA 12
+#define LED_CHANNEL_ENB 13
+
+#define TURN_P_GAIN 111 // basically full speed all the time 
+#define STRAIGHT_ADJUSTMENT_SPEED 0.7
 #define TOLERANCE 2.5
 
 #define SDA_PIN 21  
@@ -39,12 +42,13 @@ class Drivebase {
         void drive(float speed_percent);
         void tankDrive(float left_speed_percent, float right_speed_percent);
         void steer(float steer_percent);
+        void pivotSteer(float steer_percent);
         void stop();
 
         void resetHeading();
         void updateIMU();
         float getHeading();
-        void turnToHeading(float targetHeading);
+        void turnToHeading(float targetHeading, bool usePivotSteer);
         void gyroStraight(float speed_percent);
 
         bool drivingStraight = false;

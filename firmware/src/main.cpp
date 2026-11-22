@@ -16,15 +16,15 @@ void setup() {
 
   // drivebase bindings
 
-  wirelessCommunication.bindUpButton([]() -> void { drivebase.gyroStraight(true); });
-  wirelessCommunication.bindDownButton([]() -> void { drivebase.gyroStraight(-true); });
+  wirelessCommunication.bindUpButton([]() -> void { drivebase.gyroStraight(0.7); });
+  wirelessCommunication.bindDownButton([]() -> void { drivebase.gyroStraight(-0.7); });
   wirelessCommunication.bindLeftButton([]() -> void { 
     drivebase.drivingStraight = false;
-    drivebase.steer(-true); 
+    drivebase.steer(-1.0); 
   });
   wirelessCommunication.bindRightButton([]() -> void { 
     drivebase.drivingStraight = false;
-    drivebase.steer(true); 
+    drivebase.steer(1.0); 
   });
   wirelessCommunication.bindDefaultDrivebaseBinding([]() -> void { 
     drivebase.drivingStraight = false;
